@@ -12,7 +12,7 @@
             padding: 0;
             text-align: center;
         }
-        .mock-data-chart {
+        .mock-data-chart, .real-data-chart {
             width: 50%;
             margin: 0 auto;
             background: #f4f4f4;
@@ -27,15 +27,23 @@
     <h1>Welcome to the User Agent Counter</h1>
     <h3>A visual representation of user agent data in bar charts.</h3>
 
-    <!-- CHART -->
+    <!-- MOCK DATA CHART -->
     <div class="mock-data-chart">
-        <h2>Mock Data Chart</h2>
+        <h2>Mock User Agent Data Chart</h2>
         <canvas id="mockDataChart"></canvas>
     </div>
 
+    <!-- REAL DATA CHART -->
+    <div class="real-data-chart">
+        <h2>Real User Agent Data Chart</h2>
+        <canvas id="realDataChart"></canvas>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- FETCH MOCK DATA -->
     <script>
-        const data = fetch("http://localhost:3000/api/analytics/user-agent")
+        fetch("http://localhost:3000/api/analytics/user-agent")
             .then(response => response.json())
             .then(data => {
                 const lables = Object.keys(data);
@@ -60,6 +68,35 @@
                 });
             })
             .catch(error => console.error("Error fetching user agent count:", error));
+    </script>
+
+    <!-- FETCH REAL DATA -->
+    <script>
+        fetch("http://localhost:3000/api/analytics/real-user-agent")
+            .then(response => response.json())
+            .then(data => {
+                const lables = Object.keys(data);
+                const values = Object.values(data);
+                const ctx = document.getElementById('realDataChart');
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: lables,
+                        datasets: [{
+                            label: 'Counts of User Agents',
+                            data: values,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: { beginAtZero: true }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error("Error fetching real user agent count:", error));
     </script>
 </body>
 </html>

@@ -47,6 +47,28 @@ const saveUserAgent = (userAgentData) => {
     }
 }
 
+
+// COUNT REAL USER AGENT DATA
+const realUserAgentData = require("../userAgent.json");
+
+const countRealUserAgents = () => {
+    const counts = {
+        "Thunder Client": 0,
+        "Postman": 0,
+        "Edge Browser": 0,
+        "Chrome Browser": 0,
+        "Curl": 0,
+        "Other": 0
+    };
+
+    Object.values(realUserAgentData).forEach(({ userAgent, count }) => {
+        const agentType = classifyUserAgent(userAgent);
+        counts[agentType] += count;
+    });
+    return counts;
+}
+
 module.exports = {
-    saveUserAgent
+    saveUserAgent,
+    countRealUserAgents
 };
