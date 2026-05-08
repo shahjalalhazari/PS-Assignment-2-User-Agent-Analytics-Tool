@@ -8,6 +8,14 @@ const { checkUserAgent } = require("./middleware/userMiddleware");
 
 app.use(checkUserAgent);
 
+const { default: rateLimit } = require("express-rate-limit");
+const rateLimiter = rateLimit({
+    windowMs: 1 * 1000,
+    max: 3,
+    message: "Too many requests from this IP, please try again later."
+});
+app.use(rateLimiter);
+
 
 // ROOT ROUTE
 app.get("/", (req, res) => {
