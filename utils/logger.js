@@ -1,19 +1,9 @@
 const fs = require('fs');
 const path = require('path');
+const { classifyUserAgent } = require('./userAgentClassifier');
 
 // USER AGENT LOG FILE
 const userAgentFile = path.join(__dirname, "../userAgent.json");
-
-// FUNCTION TO CLASSIFY USER AGENT TYPE
-const classifyUserAgent = (agentName) => {
-    const lowerAgent = agentName.toLowerCase();
-    if (lowerAgent.includes("thunder client")) return "Thunder Client";
-    if (lowerAgent.includes("postmanruntime")) return "Postman";
-    if (lowerAgent.includes("edg")) return "Edge Browser";
-    if (lowerAgent.includes("chrome")) return "Chrome Browser";
-    if (lowerAgent.includes("curl")) return "Curl";
-    return "Other";
-};
 
 // FUNCTION TO SAVE USER AGENT DATA TO FILE
 const saveUserAgent = (userAgentData) => {

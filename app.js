@@ -20,6 +20,11 @@ const userRoutes = require('./routes/userRoutes');
 app.use('/api/users', userRoutes);
 
 
+// ANALYTICS ROUTES
+const analyticsRoutes = require('./routes/analyticsRoutes');
+app.use('/api/analytics', analyticsRoutes);
+
+
 app.listen(port, () => { 
     console.log(`Server is running on http://localhost:${port}`);
 });
